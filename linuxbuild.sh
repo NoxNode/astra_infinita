@@ -1,5 +1,6 @@
+#!/bin/bash
 pushd src
-g++ -o../bin/main.exe -std=c++11 \
+g++ -o../bin/main -std=c++11 \
 engine/gfx/Renderer.cpp \
 engine/input/Input.cpp \
 engine/input/KeyStroke.cpp \
