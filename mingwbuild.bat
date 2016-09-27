@@ -14,3 +14,4 @@ testmain.cpp ^
  ^
 -I../include -L../lib -lSDL2
 popd
+
