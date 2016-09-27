@@ -1,9 +1,9 @@
-#include "Boxeo.hpp"
+#include "TestGame.hpp"
 #include "scenes/TestScene.hpp"
 
 #include <iostream>
 using namespace std;
-void Boxeo::Init() {
+void TestGame::Init() {
     cout << "working" << endl;
     TestScene* myScene = new TestScene((Game*)this);
     myScene->Init();

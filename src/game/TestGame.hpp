@@ -1,7 +1,7 @@
 #pragma once
 #include "../engine/core/CoreClasses.hpp"
 
-class Boxeo : public Game {
+class TestGame : public Game {
 public:
     using Game::Game;
     virtual void Init();

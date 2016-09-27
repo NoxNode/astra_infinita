@@ -7,7 +7,7 @@ engine\input\KeyStroke.cpp ^
 engine\input\Mouse.cpp ^
 engine\core\Game.cpp ^
 engine\core\Scene.cpp ^
-game\Boxeo.cpp ^
+game\TestGame.cpp ^
  ^
 main.cpp ^
 testmain.cpp ^

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "game/Boxeo.hpp"
+#include "game/TestGame.hpp"
 
 using namespace std;
 
@@ -10,9 +10,9 @@ using namespace std;
 int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    Boxeo boxeo("Boxeo", 800, 600);
-    boxeo.Init();
-    boxeo.Run();
+    TestGame testGame("TestGame", 800, 600);
+    testGame.Init();
+    testGame.Run();
 
     SDL_Quit();
 	return 0;
