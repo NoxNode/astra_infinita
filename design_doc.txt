@@ -1,0 +1,79 @@
+# NoxEngine_soft2d
+
+```
+
+Engine Code Structure
+
+
+[] = array
+[*] = linked list
+
+Renderer
+	window - the window of the game
+	screenSurface - the surface for the window that is the dimensions of the window
+	drawSurface - the surface i draw to that is fixed dimensions and that I blit to the screen surface - TODO: update screen while dragging window
+	Init(SDL_Window* window, SDL_Surface* drawSurface) - creates window and drawSurface
+	Update() - updates window surface
+	Deinit() - frees the drawSurface
+Input
+	keysDown[256]
+	keysJustDown[256]
+	keysJustUp[256]
+	mouseX
+	mouseY
+	mouseLBDown
+	mouseLBJustDown
+	mouseLBJustUp
+	mouseRBDown
+	mouseRBJustDown
+	mouseRBJustUp
+	Init() - allocates newInputs and oldInputs
+	Update() - polls and pushes new input
+	Deinit() - deallocates newInputs and oldInputs
+Game
+	renderer
+	input
+	curScene
+	nextScene - if this isnt equal to curScene after updating and rendering, it deinits curScene, inits nextScene, and sets curScene to nextScene
+	Init(Renderer renderer, Input input)
+	Update()
+	Render()
+	Deinit()
+Scene
+	game
+	camera - TODO: figure out the necessary details of the camera
+	objects[*]
+	updateFuncs[][*] - array of linked lists - the array makes it so you can ensure some things run before others
+	renderFuncs[][*] - array of linked lists - the array makes it so you can ensure some things run before others
+	Init(game)
+	Update(input)
+	Render(renderer)
+	Deinit()
+Object
+	scene
+	removeMe - if true, it will be removed after all updateFuncs in the curScene have run
+	Init(scene)
+	Update(input)
+	Render(renderer)
+	Deinit()
+UpdateFuncContainer
+	parentObj
+	run - pointer to the function its a conainter for
+	isActive
+	removeMeOnNullParent - this prevents the problem of an object having 2 updateFuncs, one removing itself and the object and the other still being there
+	                     - if this is true, it will be removed before running (if parentObj is null)
+	removeMe - if true, it will be removed before or after running (depending if it set it itself)
+	Init(parentObj, removeMeOnNullParent)
+	Update(input)
+	Deinit()
+RenderFuncContainer
+	parentObj
+	run - pointer to the function its a conainter for
+	isActive
+	removeMeOnNullParent - this prevents the problem of an object having 2 renderFuncs, one removing itself and the object and the other still being there
+	                     - if this is true, it will be removed before running (if parentObj is null)
+	Init(parentObj, removeMeOnNullParent)
+	Render(renderer)
+	Deinit()
+
+```
