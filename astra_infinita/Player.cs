@@ -16,7 +16,7 @@ namespace astra_infinita {
         bool up, down, left, right;
         bool up2, down2, left2, right2;
         
-        public void Initialize(int world_width, int world_height) {
+        public void Initialize(Vector2 startPosition) {
             up = false;
             down = false;
             left = false;
@@ -26,8 +26,8 @@ namespace astra_infinita {
             left2 = false;
             right2 = false;
 
-            position = new Vector2(world_width / 2, world_height / 2);
-            dest = new Vector2(world_width / 2, world_height / 2);
+            position = new Vector2(startPosition.X, startPosition.Y);
+            dest = new Vector2(startPosition.X, startPosition.Y);
         }
 
         public void Load(GraphicsDevice graphicsDevice) {
@@ -39,7 +39,7 @@ namespace astra_infinita {
             texture.Dispose();
         }
 
-        public void UpdateMovement(GameTime gameTime) {
+        public void UpdateMovement(int millisecondsElapsed) {
             Vector2 move_dir = new Vector2(0, 0);
             if (!up && Keyboard.GetState().IsKeyDown(Keys.W)) {
                 up = true;
@@ -102,8 +102,8 @@ namespace astra_infinita {
             dest.X += move_dir.X;
             dest.Y += move_dir.Y;
 
-            position.X += (dest.X - position.X) / 100 * gameTime.ElapsedGameTime.Milliseconds;
-            position.Y += (dest.Y - position.Y) / 100 * gameTime.ElapsedGameTime.Milliseconds;
+            position.X += (dest.X - position.X) / 100 * millisecondsElapsed;
+            position.Y += (dest.Y - position.Y) / 100 * millisecondsElapsed;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {

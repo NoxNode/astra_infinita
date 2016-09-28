@@ -48,7 +48,7 @@ namespace astra_infinita {
             world_height = window_height * 16;
 
             player = new Player();
-            player.Initialize(world_width, world_height);
+            player.Initialize(new Vector2(world_width / 2, world_height / 2));
             camera = new Camera();
             grid = new Grid();
 
@@ -88,7 +88,7 @@ namespace astra_infinita {
                 Exit();
 
             // Add your update logic here
-            player.UpdateMovement(gameTime);
+            player.UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
             camera.UpdatePosition(player.position, window_width, window_height);
 
             // TODO: constraints for the player and camera going out of world bounds
