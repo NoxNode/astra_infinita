@@ -8,3 +8,13 @@ D:\workspace\github\temp_astra_infinita\astra_infinita\astra_infinita\obj\x86\De
 D:\workspace\github\temp_astra_infinita\astra_infinita\astra_infinita\obj\x86\Debug\astra_infinita.exe
 D:\workspace\github\temp_astra_infinita\astra_infinita\astra_infinita\obj\x86\Debug\astra_infinita.pdb
 D:\workspace\github\temp_astra_infinita\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\SpriteFontTemPlate.xnb
+D:\workspace\github\astra_infinita\astra_infinita\obj\x86\Debug\astra_infinita.exe
+D:\workspace\github\astra_infinita\astra_infinita\obj\x86\Debug\astra_infinita.pdb
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\SpriteFontTemPlate.xnb
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\OpenTK.dll.config
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\astra_infinita.exe
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\astra_infinita.pdb
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\MonoGame.Framework.dll
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\NVorbis.dll
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\OpenTK.dll
+D:\workspace\github\astra_infinita\astra_infinita\obj\x86\Debug\astra_infinita.csprojResolveAssemblyReference.cache

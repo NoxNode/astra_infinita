@@ -10,32 +10,20 @@ namespace astra_infinita {
     public class Game1 : Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D texture;
-        Vector2 position;
-        Vector2 dest;
-        Vector2 camera;
-        Texture2D horizontalGridLine;
-        Texture2D verticalGridLine;
+        public static ContentManager content;
+
         int window_width, window_height;
         int world_width, world_height;
-        bool up, down, left, right;
-        bool up2, down2, left2, right2;
+
+        Player player;
+        Camera camera;
+        Grid grid;
+
         SpriteFont myFont;
-        ContentManager content;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-        }
-
-        void ColorTexture(Texture2D texture, Color color) {
-            Color[] colorData = new Color[texture.Width * texture.Height];
-            for (int x = 0; x < texture.Width; x++) {
-                for(int y = 0; y < texture.Height; y++) {
-                    colorData[y * texture.Width + x] = color;
-                }
-            }
-            texture.SetData<Color>(colorData);
         }
 
         /// <summary>
@@ -56,28 +44,13 @@ namespace astra_infinita {
 
             myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
 
-            up = false;
-            down = false;
-            left = false;
-            right = false;
-            up2 = false;
-            down2 = false;
-            left2 = false;
-            right2 = false;
-
             world_width = window_width * 16;
             world_height = window_height * 16;
 
-            camera = new Vector2(0, 0);
-            position = new Vector2(window_width * 8, window_height * 8);
-            dest = new Vector2(window_width * 8, window_height * 8);
-            texture = new Texture2D(this.GraphicsDevice, 50, 50);
-            ColorTexture(texture, Color.Red);
-
-            horizontalGridLine = new Texture2D(this.GraphicsDevice, window_width, 1);
-            ColorTexture(horizontalGridLine, Color.White);
-            verticalGridLine = new Texture2D(this.GraphicsDevice, 1, window_height);
-            ColorTexture(verticalGridLine, Color.White);
+            player = new Player();
+            player.Initialize(world_width, world_height);
+            camera = new Camera();
+            grid = new Grid();
 
             base.Initialize();
         }
@@ -90,7 +63,9 @@ namespace astra_infinita {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // use this.Content to load your game content here
+            player.Load(GraphicsDevice);
+            grid.Load(GraphicsDevice, window_width, window_height);
         }
 
         /// <summary>
@@ -99,9 +74,8 @@ namespace astra_infinita {
         /// </summary>
         protected override void UnloadContent() {
             // TODO: Unload any non ContentManager content here
-            texture.Dispose();
-            horizontalGridLine.Dispose();
-            verticalGridLine.Dispose();
+            player.Unload();
+            grid.Unload();
         }
 
         /// <summary>
@@ -114,83 +88,8 @@ namespace astra_infinita {
                 Exit();
 
             // Add your update logic here
-            Vector2 move_dir = new Vector2(0, 0);
-            if (!up && Keyboard.GetState().IsKeyDown(Keys.W)) {
-                up = true;
-                move_dir.Y -= 50;
-            }
-            if (!left && Keyboard.GetState().IsKeyDown(Keys.A)) {
-                left = true;
-                move_dir.X -= 50;
-            }
-            if (!down && Keyboard.GetState().IsKeyDown(Keys.S)) {
-                down = true;
-                move_dir.Y += 50;
-            }
-            if (!right && Keyboard.GetState().IsKeyDown(Keys.D)) {
-                right = true;
-                move_dir.X += 50;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.W)) {
-                up = false;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.A)) {
-                left = false;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.S)) {
-                down = false;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.D)) {
-                right = false;
-            }
-
-            if (!up2 && !up && Keyboard.GetState().IsKeyDown(Keys.Up)) {
-                up2 = true;
-                move_dir.Y -= 50;
-            }
-            if (!left2 && !left && Keyboard.GetState().IsKeyDown(Keys.Left)) {
-                left2 = true;
-                move_dir.X -= 50;
-            }
-            if (!down2 && !down && Keyboard.GetState().IsKeyDown(Keys.Down)) {
-                down2 = true;
-                move_dir.Y += 50;
-            }
-            if (!right2 && !right && Keyboard.GetState().IsKeyDown(Keys.Right)) {
-                right2 = true;
-                move_dir.X += 50;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.Up)) {
-                up2 = false;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.Left)) {
-                left2 = false;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.Down)) {
-                down2 = false;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.Right)) {
-                right2 = false;
-            }
-
-            dest.X += move_dir.X;
-            dest.Y += move_dir.Y;
-
-            position.X += (dest.X - position.X) / 5;
-            position.Y += (dest.Y - position.Y) / 5;
-
-            if (position.X - camera.X < window_width / 3) {
-                camera.X = position.X - window_width / 3;
-            }
-            if (position.X - camera.X > window_width * 2 / 3) {
-                camera.X = position.X - window_width * 2 / 3;
-            }
-            if (position.Y - camera.Y < window_height / 3) {
-                camera.Y = position.Y - window_height / 3;
-            }
-            if (position.Y - camera.Y > window_height * 2 / 3) {
-                camera.Y = position.Y - window_height * 2 / 3;
-            }
+            player.UpdateMovement(gameTime);
+            camera.UpdatePosition(player.position, window_width, window_height);
 
             // TODO: constraints for the player and camera going out of world bounds
 
@@ -206,14 +105,11 @@ namespace astra_infinita {
 
             // Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(texture, position - camera);
-            for (int x = 0; x < world_width; x += 50) {
-                spriteBatch.Draw(verticalGridLine, new Vector2(x - camera.X, 0));
-            }
-            for (int y = 0; y < world_height; y += 50) {
-                spriteBatch.Draw(horizontalGridLine, new Vector2(0, y - camera.Y));
-            }
-            spriteBatch.DrawString(myFont, "test", position - camera, Color.Blue);
+
+            player.Draw(spriteBatch, camera.position);
+            grid.Draw(spriteBatch, camera.position, world_width, world_height, player.getWidth(), player.getHeight());
+            spriteBatch.DrawString(myFont, "test", player.position - camera.position, Color.Blue);
+
             spriteBatch.End();
 
             base.Draw(gameTime);

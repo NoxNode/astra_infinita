@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
-namespace ModularKnights
-{
+namespace astra_infinita {
     class MusicPlayer
     {
        public Song current_song;
