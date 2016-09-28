@@ -50,8 +50,6 @@ namespace astra_infinita {
             camera = new Camera();
             grid = new Grid();
 
-            myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
-
             base.Initialize();
         }
 
@@ -66,6 +64,8 @@ namespace astra_infinita {
             // use this.Content to load your game content here
             player.Load(GraphicsDevice);
             grid.Load(GraphicsDevice, window_width, window_height);
+
+            myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
         }
 
         /// <summary>
