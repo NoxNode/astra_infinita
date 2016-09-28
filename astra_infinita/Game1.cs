@@ -42,8 +42,6 @@ namespace astra_infinita {
             window_width = graphics.PreferredBackBufferWidth;
             window_height = graphics.PreferredBackBufferHeight;
 
-            myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
-
             world_width = window_width * 16;
             world_height = window_height * 16;
 
@@ -51,6 +49,8 @@ namespace astra_infinita {
             player.Initialize(new Vector2(world_width / 2, world_height / 2));
             camera = new Camera();
             grid = new Grid();
+
+            myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
 
             base.Initialize();
         }
@@ -108,6 +108,7 @@ namespace astra_infinita {
 
             player.Draw(spriteBatch, camera.position);
             grid.Draw(spriteBatch, camera.position, world_width, world_height, player.getWidth(), player.getHeight());
+
             spriteBatch.DrawString(myFont, "test", player.position - camera.position, Color.Blue);
 
             spriteBatch.End();
