@@ -26,18 +26,19 @@ namespace astra_infinita {
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
-            for (int x = 0; x < Game1.world_width; x += Game1.tile_width) {
+            for (int x = 0; x < Game1.world_width; x += Game1.tile_length) {
                 spriteBatch.Draw(verticalGridLine, new Vector2(x - cameraPosition.X, 0));
             }
-            for (int y = 0; y < Game1.world_height; y += Game1.tile_height) {
+            for (int y = 0; y < Game1.world_height; y += Game1.tile_length) {
                 spriteBatch.Draw(horizontalGridLine, new Vector2(0, y - cameraPosition.Y));
             }
         }
 
-        public static void CreateTilesFromGrid(List<Tile> tileList) {
-            for (int x = 0; x < Game1.world_width; x += Game1.tile_width) {
-                for (int y = 0; y < Game1.world_height; y += Game1.tile_height) {
-                    tileList.Add(new Tile(x/Game1.tile_width, y/Game1.tile_height));
+        public void CreateTilesFromGrid(List<List<Tile>> tiles) {
+            for (int x = 0; x < Game1.world_width / Game1.tile_length; x++) {
+                tiles.Add(new List<Tile>());
+                for (int y = 0; y < Game1.world_height / Game1.tile_length; y++) {
+                    tiles[x].Add(new Tile(new Vector2(x, y)));
                 }
             }
         }

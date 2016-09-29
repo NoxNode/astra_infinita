@@ -11,59 +11,43 @@ namespace astra_infinita
 {
     public class Tile
     {
-        public int X;
-        public int Y;
-       public List<GameObject> gameObjects;
-        //add object holder so tiles can hold items/objects/things
+        public Vector2 position;
+        public List<List<GameObject>> gameObjects;
 
-        public Tile(int x, int y) {
-            this.X = x;
-            this.Y = y;
-            gameObjects = new List<GameObject>();
+        public Tile(Vector2 position) {
+            this.position = position;
+            gameObjects = new List<List<GameObject>>();
+            gameObjects.Add(new List<GameObject>());
         }
 
-        public virtual int getX() {
-            return this.X;
-        }
-
-        public virtual int getY() {
-            return this.Y;
-        }
-
-        public void Update() {
-            
-        }
-
-        public static Tile getTile(int x, int y, List<Tile> tilelist)
-        {
-            
-            foreach (Tile t in tilelist)
-            {
-                if (t.X == x && t.Y == y) return t;
+        public void Update(GameTime gameTime) {
+            for (int curLayer = 0; curLayer < gameObjects.Count; curLayer++) {
+                for (int index = 0; index < gameObjects[curLayer].Count; index++) {
+                    GameObject obj = gameObjects[curLayer][index];
+                    obj.Update(gameTime);
+                }
             }
-            return null;
         }
 
-        public static void removeObject(Tile t,GameObject obj)
-        {
-            t.gameObjects.Remove(obj);
-        }
-        public static void AddObject(Tile t,GameObject obj)
-        {
-            t.gameObjects.Add(obj);
-        }
-        public static void removePlayer(Tile t, Player p)
-        {
-            t.gameObjects.Remove(p);
-        }
-
-        public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition)
-        {
-            foreach (GameObject o in gameObjects)
-            {
-                if (o.GetType() == typeof(Player)) continue;
-                spriteBatch.Draw(o.texture, new Vector2(X*Game1.tile_width,Y*Game1.tile_height)-cameraPosition);
+        public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
+            for (int curLayer = 0; curLayer < gameObjects.Count; curLayer++) {
+                for (int index = 0; index < gameObjects[curLayer].Count; index++) {
+                    GameObject obj = gameObjects[curLayer][index];
+                    obj.Draw(spriteBatch, cameraPosition);
+                }
             }
+        }
+
+        public void RemoveObject(GameObject obj) {
+            gameObjects[obj.layer].RemoveAt(obj.objectIndex);
+        }
+        public void AddObject(GameObject obj) {
+            gameObjects[obj.layer].Add(obj);
+            obj.objectIndex = gameObjects[obj.layer].Count - 1;
+        }
+
+        public static Tile getTileAt(Vector2 position, List<List<Tile>> tiles) {
+            return tiles[(int)position.X][(int)position.Y];
         }
     }
 }
