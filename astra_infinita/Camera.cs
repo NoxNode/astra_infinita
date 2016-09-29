@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace astra_infinita {
-    class Camera {
+    public class Camera {
         public Vector2 position;
 
         public Camera() {

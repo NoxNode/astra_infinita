@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace astra_infinita {
-    class Grid {
+    public class Grid {
         public Texture2D horizontalGridLine;
         public Texture2D verticalGridLine;
         
@@ -25,19 +25,19 @@ namespace astra_infinita {
             verticalGridLine.Dispose();
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
-            for (int x = 0; x < Game1.world_width; x += Game1.tile_length) {
+        public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition, int tile_length, int world_width, int world_height) {
+            for (int x = 0; x < world_width; x += tile_length) {
                 spriteBatch.Draw(verticalGridLine, new Vector2(x - cameraPosition.X, 0));
             }
-            for (int y = 0; y < Game1.world_height; y += Game1.tile_length) {
+            for (int y = 0; y < world_height; y += tile_length) {
                 spriteBatch.Draw(horizontalGridLine, new Vector2(0, y - cameraPosition.Y));
             }
         }
 
-        public void CreateTilesFromGrid(List<List<Tile>> tiles) {
-            for (int x = 0; x < Game1.world_width / Game1.tile_length; x++) {
+        public void CreateTilesFromGrid(List<List<Tile>> tiles, int tile_length, int world_width, int world_height) {
+            for (int x = 0; x < world_width / tile_length; x++) {
                 tiles.Add(new List<Tile>());
-                for (int y = 0; y < Game1.world_height / Game1.tile_length; y++) {
+                for (int y = 0; y < world_height / tile_length; y++) {
                     tiles[x].Add(new Tile(new Vector2(x, y)));
                 }
             }

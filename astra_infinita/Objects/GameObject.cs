@@ -7,15 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace astra_infinita.Objects {
-   public abstract class GameObject {
+   public class GameObject {
+        public Scene curScene;
         public int layer, objectIndex;
         public Tile myTile;
         public Tile myOldTile;
         public Texture2D texture;
         public string objectName;
 
-        public abstract void Update(GameTime gameTime);
+        public virtual void Update(GameTime gameTime) { }
 
-        public abstract void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition);
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) { }
     }
 }

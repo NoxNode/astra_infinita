@@ -15,21 +15,20 @@ namespace astra_infinita
         class SaveGame
         {
             public static string savePath;
-            public static void Save()
+            public static void Save(Player player)
             {
-               if(savePath!="") savePath=Path.Combine(Program.executingPath, "Save");
-                if (!Directory.Exists(savePath))
-                {
+                if(savePath!="")
+                    savePath =Path.Combine(Program.executingPath, "Save");
+                if (!Directory.Exists(savePath)) {
                     Directory.CreateDirectory(savePath);
                 }
                 try {
-                    WriteToJsonFile<Player>(Path.Combine(savePath, "Player.json"), Program.game.player, false);
+                    WriteToJsonFile<Player>(Path.Combine(savePath, "Player.json"), player, false);
                 }
-                catch(Exception e)
-                {
+                catch(Exception e) {
                     Console.WriteLine(e);
                 }
-                }
+            }
 
             public static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false) where T : new()
             {
