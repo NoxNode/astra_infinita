@@ -17,9 +17,8 @@ namespace astra_infinita {
         public const int window_width = 800, window_height = 600;
         public const int world_width = 800 * 16, world_height = 600 * 16;
 
-        public const int tile_width = 32;
-        public const int tile_height = 32;
-        public static List<Tile> mapTiles;
+        public const int tile_length = 32;
+        public static List<List<Tile>> tiles;
 
         public Player player;
         Camera camera;
@@ -47,11 +46,12 @@ namespace astra_infinita {
             graphics.PreferredBackBufferHeight = window_height;
 
             //must be initialized before player.
-            mapTiles = new List<Tile>();
+            tiles = new List<List<Tile>>();
       
             grid = new Grid();
-            Grid.CreateTilesFromGrid(mapTiles);
+            grid.CreateTilesFromGrid(tiles);
             player = new Player(new Vector2(world_width / 2, world_height / 2));
+            tiles[(int)(player.position.X / tile_length)][(int)(player.position.Y / tile_length)].AddObject(player);
             camera = new Camera();
 
             base.Initialize();
@@ -70,8 +70,6 @@ namespace astra_infinita {
             grid.Load(GraphicsDevice);
 
             myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
-            Tile.AddObject(player.getTile(), player);
-            //grid.CreateTilesFromGrid();
         }
 
         /// <summary>
@@ -94,8 +92,12 @@ namespace astra_infinita {
                 Exit();
 
             // Add your update logic here
-            player.UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
-            player.UpdateTilePosition();
+            //player.UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
+            for (int x = 0; x < tiles.Count; x++) {
+                for(int y = 0; y < tiles[x].Count; y++) {
+                    tiles[x][y].Update(gameTime);
+                }
+            }
             camera.UpdatePosition(player.position);
 
             // TODO: constraints for the player and camera going out of world bounds
@@ -113,17 +115,16 @@ namespace astra_infinita {
             // Add your drawing code here
             spriteBatch.Begin();
 
-            foreach(Tile t in mapTiles)
-            {
-                t.Draw(spriteBatch, camera.position);
+            //player.Draw(spriteBatch, camera.position);
+            for (int x = 0; x < tiles.Count; x++) {
+                for (int y = 0; y < tiles[x].Count; y++) {
+                    tiles[x][y].Draw(spriteBatch, camera.position);
+                }
             }
-            player.Draw(spriteBatch, camera.position);
             grid.Draw(spriteBatch, camera.position);
 
-            if(player.getTile()!=null)spriteBatch.DrawString(myFont, Convert.ToString(player.getTile().Y), player.position - camera.position, Color.Blue);
-
-
-            
+            if(player.getTile() != null)
+                spriteBatch.DrawString(myFont, Convert.ToString(player.myTile.position.Y), player.position - camera.position, Color.Blue);
 
             spriteBatch.End();
 

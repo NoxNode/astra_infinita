@@ -6,14 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace astra_infinita.Objects
-{
-   public class GameObject
-    {
-        public static Tile tilePosition;
-        public static Tile tilePostionOld;
-        public Vector2 position;
-       public  Texture2D texture;
+namespace astra_infinita.Objects {
+   public abstract class GameObject {
+        public int layer, objectIndex;
+        public Tile myTile;
+        public Tile myOldTile;
+        public Texture2D texture;
         public string objectName;
+
+        public abstract void Update(GameTime gameTime);
+
+        public abstract void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition);
     }
 }
