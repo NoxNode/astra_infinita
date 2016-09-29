@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/owner/Documents/Visual Studio 2015/Projects/astra_infinita/astra_infinita/Content/Music/Songs/Wasteland/wasteland1.wav</SourceFile>
+  <SourceTime>2016-09-29T10:19:51.8455761-07:00</SourceTime>
+  <DestFile>C:/Users/owner/Documents/Visual Studio 2015/Projects/astra_infinita/astra_infinita/Content/bin/DesktopGL/Music/Songs/Wasteland/wasteland1.xnb</DestFile>
+  <DestTime>2016-09-29T10:29:01.4107663-07:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2016-03-29T23:36:08-07:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2016-03-29T23:36:08-07:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>C:/Users/owner/Documents/Visual Studio 2015/Projects/astra_infinita/astra_infinita/Content/bin/DesktopGL/Music/Songs/Wasteland/wasteland1.ogg</string>
+  </BuildOutput>
+</PipelineBuildEvent>

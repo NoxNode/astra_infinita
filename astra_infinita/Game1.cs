@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace astra_infinita {
     /// <summary>
@@ -11,6 +13,7 @@ namespace astra_infinita {
     /// </summary>
     public class Game1 : Game {
         GraphicsDeviceManager graphics;
+        MusicPlayer musicPlayer;
         SpriteBatch spriteBatch;
         public static ContentManager content;
 
@@ -42,10 +45,11 @@ namespace astra_infinita {
             // Add your initialization logic here
             this.IsMouseVisible = true;
             content = new ContentManager(base.Content.ServiceProvider, "Content");
-
+            musicPlayer = new MusicPlayer();
             graphics.PreferredBackBufferWidth = window_width;
             graphics.PreferredBackBufferHeight = window_height;
 
+           
             //must be initialized before player.
             mapTiles = new List<Tile>();
       
@@ -71,7 +75,8 @@ namespace astra_infinita {
 
             myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
             Tile.AddObject(player.getTile(), player);
-            //grid.CreateTilesFromGrid();
+            musicPlayer.Load();
+            musicPlayer.play_song_from_list("wasteland1");
         }
 
         /// <summary>
