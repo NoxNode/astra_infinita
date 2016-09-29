@@ -33,5 +33,18 @@ namespace astra_infinita {
                 spriteBatch.Draw(horizontalGridLine, new Vector2(0, y - cameraPosition.Y));
             }
         }
+
+        public void createTilesFromGrid(int world_width, int world_height, int tileWidth, int tileHeight)
+        {
+
+            for (int x = 0; x < world_width; x += tileWidth)
+            {
+                for (int y = 0; y < world_height; y += tileHeight)
+                {
+                    Program.game.mapTiles.Add(new Tile(x, y));
+                    //spriteBatch.Draw(horizontalGridLine, new Vector2(0, y - cameraPosition.Y));
+                }
+            }
+        }
     }
 }

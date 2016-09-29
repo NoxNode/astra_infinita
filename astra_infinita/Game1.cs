@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace astra_infinita {
     /// <summary>
@@ -18,6 +20,10 @@ namespace astra_infinita {
         Player player;
         Camera camera;
         Grid grid;
+
+       public int tile_width;
+       public int tile_height;
+        public List<Tile> mapTiles;
 
         SpriteFont myFont;
 
@@ -45,10 +51,18 @@ namespace astra_infinita {
             world_width = window_width * 16;
             world_height = window_height * 16;
 
+            //must be initialized before player.
+            tile_height = 32;
+            tile_width = 32;
+            mapTiles = new List<Tile>();
+
+
             player = new Player();
             player.Initialize(new Vector2(world_width / 2, world_height / 2));
             camera = new Camera();
             grid = new Grid();
+
+            
 
             base.Initialize();
         }
@@ -66,6 +80,7 @@ namespace astra_infinita {
             grid.Load(GraphicsDevice, window_width, window_height);
 
             myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
+            grid.createTilesFromGrid(world_width, world_height, tile_width, tile_height);
         }
 
         /// <summary>
@@ -89,6 +104,7 @@ namespace astra_infinita {
 
             // Add your update logic here
             player.UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
+            player.updateTilePosition(gameTime);
             camera.UpdatePosition(player.position, window_width, window_height);
 
             // TODO: constraints for the player and camera going out of world bounds
@@ -107,9 +123,9 @@ namespace astra_infinita {
             spriteBatch.Begin();
 
             player.Draw(spriteBatch, camera.position);
-            grid.Draw(spriteBatch, camera.position, world_width, world_height, player.getWidth(), player.getHeight());
+            grid.Draw(spriteBatch, camera.position, world_width, world_height, Program.game.tile_width, Program.game.tile_height);
 
-            spriteBatch.DrawString(myFont, "test", player.position - camera.position, Color.Blue);
+            spriteBatch.DrawString(myFont, Convert.ToString(player.getTile().Y), player.position - camera.position, Color.Blue);
 
             spriteBatch.End();
 
