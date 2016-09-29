@@ -14,8 +14,14 @@ namespace astra_infinita {
         public Vector2 position;
         bool up, down, left, right;
         bool up2, down2, left2, right2;
+        public List<Item> inventory;
 
         SpriteFont myFont;
+
+        public Player()
+        {
+            //used for .Json serialization. Do not remove.
+        }
 
         public Player(Vector2 startPosition, Scene curScene, GraphicsDevice graphicsDevice) {
             layer = 0;
@@ -34,6 +40,9 @@ namespace astra_infinita {
             myTile = Tile.getTileAt(startPosition / curScene.tile_length, curScene.tiles);
             this.curScene = curScene;
             objectName = "Player";
+            inventory = new List<Item>();
+            inventory.Capacity = 8;
+
             Load(graphicsDevice);
 
             myFont = Game1.content.Load<SpriteFont>("SpriteFontTemPlate");
@@ -46,6 +55,9 @@ namespace astra_infinita {
         public override void Update(GameTime gameTime) {
             UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
             UpdateCameraPosition();
+            if (Keyboard.GetState().IsKeyDown(Keys.J)) {
+                SaveSystem.SaveGame.Save(this);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
@@ -178,5 +190,43 @@ namespace astra_infinita {
         public Tile getTile() {
             return myTile;
         }
+
+        public bool isInventoryFull()
+        {
+            if (inventory.Count == inventory.Capacity) return true;
+            else return false;
+        }
+
+        public bool addItemToInventory(Item I)
+        {
+            if (isInventoryFull() == false)
+            {
+                inventory.Add(I);
+                return true;
+            }
+            return false;
+        }
+        public bool addItemToInventoryFromTile(Item I, Tile T)
+        {
+            if (isInventoryFull() == false)
+            {
+                inventory.Add(I);
+                T.RemoveObject(I);
+                return true;
+            }
+            return false;
+        }
+
+        public void removeItemFromInventory(Item I)
+        {
+            inventory.Remove(I);
+        }
+
+        public void dropItem(Item I, Tile T)
+        {
+            inventory.Remove(I);
+            T.AddObject(I);
+        }
+
     }
 }
