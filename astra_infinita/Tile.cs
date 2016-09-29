@@ -13,26 +13,21 @@ namespace astra_infinita
 
         //add object holder so tiles can hold items/objects/things
 
-       public Tile(int x, int y)
-        {
+        public Tile(int x, int y) {
             this.X = x;
             this.Y = y;
-
         }
-        public virtual int getX()
-        {
+
+        public virtual int getX() {
             return this.X;
         }
-        public virtual int getY()
-        {
+
+        public virtual int getY() {
             return this.Y;
         }
 
-        public void update()
-        {
+        public void Update() {
             
         }
-
-
     }
 }

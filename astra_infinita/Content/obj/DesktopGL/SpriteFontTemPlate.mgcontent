@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/owner/Documents/Visual Studio 2015/Projects/astra_infinita/astra_infinita/Content/SpriteFontTemPlate.spritefont</SourceFile>
-  <SourceTime>2016-09-28T00:44:49.7100282-07:00</SourceTime>
-  <DestFile>C:/Users/owner/Documents/Visual Studio 2015/Projects/astra_infinita/astra_infinita/Content/bin/DesktopGL/SpriteFontTemPlate.xnb</DestFile>
-  <DestTime>2016-09-28T17:56:02.0669868-07:00</DestTime>
+  <SourceFile>D:/workspace/github/astra_infinita/astra_infinita/Content/SpriteFontTemPlate.spritefont</SourceFile>
+  <SourceTime>2016-09-28T00:13:45.4663218-07:00</SourceTime>
+  <DestFile>D:/workspace/github/astra_infinita/astra_infinita/Content/bin/DesktopGL/SpriteFontTemPlate.xnb</DestFile>
+  <DestTime>2016-09-28T20:31:59.8896718-07:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2016-03-29T23:36:08-07:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

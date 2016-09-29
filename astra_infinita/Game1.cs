@@ -14,16 +14,16 @@ namespace astra_infinita {
         SpriteBatch spriteBatch;
         public static ContentManager content;
 
-        int window_width, window_height;
-        int world_width, world_height;
+        public int window_width, window_height;
+        public int world_width, world_height;
+
+        public int tile_width;
+        public int tile_height;
+        public List<Tile> mapTiles;
 
         Player player;
         Camera camera;
         Grid grid;
-
-       public int tile_width;
-       public int tile_height;
-        public List<Tile> mapTiles;
 
         SpriteFont myFont;
 
@@ -56,13 +56,9 @@ namespace astra_infinita {
             tile_width = 32;
             mapTiles = new List<Tile>();
 
-
-            player = new Player();
-            player.Initialize(new Vector2(world_width / 2, world_height / 2));
+            player = new Player(new Vector2(world_width / 2, world_height / 2));
             camera = new Camera();
             grid = new Grid();
-
-            
 
             base.Initialize();
         }
@@ -77,10 +73,10 @@ namespace astra_infinita {
 
             // use this.Content to load your game content here
             player.Load(GraphicsDevice);
-            grid.Load(GraphicsDevice, window_width, window_height);
+            grid.Load(GraphicsDevice);
 
             myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
-            grid.createTilesFromGrid(world_width, world_height, tile_width, tile_height);
+            grid.CreateTilesFromGrid();
         }
 
         /// <summary>
@@ -88,7 +84,7 @@ namespace astra_infinita {
         /// game-specific content.
         /// </summary>
         protected override void UnloadContent() {
-            // TODO: Unload any non ContentManager content here
+            // Unload any non ContentManager content here
             player.Unload();
             grid.Unload();
         }
@@ -104,8 +100,8 @@ namespace astra_infinita {
 
             // Add your update logic here
             player.UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
-            player.updateTilePosition(gameTime);
-            camera.UpdatePosition(player.position, window_width, window_height);
+            player.UpdateTilePosition();
+            camera.UpdatePosition(player.position);
 
             // TODO: constraints for the player and camera going out of world bounds
 
@@ -123,7 +119,7 @@ namespace astra_infinita {
             spriteBatch.Begin();
 
             player.Draw(spriteBatch, camera.position);
-            grid.Draw(spriteBatch, camera.position, world_width, world_height, Program.game.tile_width, Program.game.tile_height);
+            grid.Draw(spriteBatch, camera.position);
 
             spriteBatch.DrawString(myFont, Convert.ToString(player.getTile().Y), player.position - camera.position, Color.Blue);
 

@@ -4,6 +4,6 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/owner/Documents/Visual Studio 2015/Projects/astra_infinita/astra_infinita/Content/SpriteFontTemPlate.spritefont</File>
+    <File>D:/workspace/github/astra_infinita/astra_infinita/Content/SpriteFontTemPlate.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

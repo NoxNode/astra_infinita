@@ -13,13 +13,13 @@ namespace astra_infinita {
     class Player {
         public Vector2 position;
         Texture2D texture;
-        Vector2 dest;
+        Vector2 destination;
         bool up, down, left, right;
         bool up2, down2, left2, right2;
 
         Tile tilePosition;
 
-        public void Initialize(Vector2 startPosition) {
+        public Player(Vector2 startPosition) {
             up = false;
             down = false;
             left = false;
@@ -30,7 +30,7 @@ namespace astra_infinita {
             right2 = false;
 
             position = new Vector2(startPosition.X, startPosition.Y);
-            dest = new Vector2(startPosition.X, startPosition.Y);
+            destination = new Vector2(startPosition.X, startPosition.Y);
             tilePosition = new Tile((int)startPosition.X / Program.game.tile_width, (int)startPosition.Y / Program.game.tile_height);
         }
 
@@ -103,12 +103,17 @@ namespace astra_infinita {
                 right2 = false;
             }
 
-            dest.X += move_dir.X;
-            dest.Y += move_dir.Y;
+            destination.X += move_dir.X;
+            destination.Y += move_dir.Y;
 
-            position.X += (dest.X - position.X) / 100 * millisecondsElapsed;
-            position.Y += (dest.Y - position.Y) / 100 * millisecondsElapsed;
+            position.X += (destination.X - position.X) / 100 * millisecondsElapsed;
+            position.Y += (destination.Y - position.Y) / 100 * millisecondsElapsed;
             //updateTilePosition();
+        }
+
+        public void UpdateTilePosition() {
+            tilePosition.X = (int)destination.X / Program.game.tile_width;
+            tilePosition.Y = (int)destination.Y / Program.game.tile_height;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
@@ -122,11 +127,7 @@ namespace astra_infinita {
         public int getHeight() {
             return texture.Height;
         }
-        public void updateTilePosition(GameTime gameTime)
-        {
-            tilePosition.X =(int) position.X / Program.game.tile_width;
-            tilePosition.Y = (int)position.Y / Program.game.tile_height;
-        }
+
         public Tile getTile()
         {
             return tilePosition;
