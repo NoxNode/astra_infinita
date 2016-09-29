@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using astra_infinita.Scenes;
 
 namespace astra_infinita {
     /// <summary>
@@ -18,16 +19,8 @@ namespace astra_infinita {
         public static ContentManager content;
 
         public const int window_width = 800, window_height = 600;
-        public const int world_width = 800 * 16, world_height = 600 * 16;
 
-        public const int tile_length = 32;
-        public static List<List<Tile>> tiles;
-
-        public Player player;
-        Camera camera;
-        Grid grid;
-
-        SpriteFont myFont;
+        public Scene curScene;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -44,19 +37,12 @@ namespace astra_infinita {
             // Add your initialization logic here
             this.IsMouseVisible = true;
             content = new ContentManager(base.Content.ServiceProvider, "Content");
-            musicPlayer = new MusicPlayer();
             graphics.PreferredBackBufferWidth = window_width;
             graphics.PreferredBackBufferHeight = window_height;
 
-           
-            //must be initialized before player.
-            tiles = new List<List<Tile>>();
-      
-            grid = new Grid();
-            grid.CreateTilesFromGrid(tiles);
-            player = new Player(new Vector2(world_width / 2, world_height / 2));
-            tiles[(int)(player.position.X / tile_length)][(int)(player.position.Y / tile_length)].AddObject(player);
-            camera = new Camera();
+            musicPlayer = new MusicPlayer();
+
+            curScene = new StartingPlanet(32, 800 * 16, 600 * 16);
 
             base.Initialize();
         }
@@ -70,11 +56,7 @@ namespace astra_infinita {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // use this.Content to load your game content here
-            player.Load(GraphicsDevice);
-            grid.Load(GraphicsDevice);
-
-            myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
-            
+            curScene.InitializeTilemap(GraphicsDevice);
             musicPlayer.Load();
             musicPlayer.play_song_from_list("wasteland1");
         }
@@ -85,8 +67,7 @@ namespace astra_infinita {
         /// </summary>
         protected override void UnloadContent() {
             // Unload any non ContentManager content here
-            player.Unload();
-            grid.Unload();
+            curScene.UninitializeTilemap();
         }
 
         /// <summary>
@@ -99,15 +80,7 @@ namespace astra_infinita {
                 Exit();
 
             // Add your update logic here
-            //player.UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
-            for (int x = 0; x < tiles.Count; x++) {
-                for(int y = 0; y < tiles[x].Count; y++) {
-                    tiles[x][y].Update(gameTime);
-                }
-            }
-            camera.UpdatePosition(player.position);
-
-            // TODO: constraints for the player and camera going out of world bounds
+            curScene.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -122,16 +95,7 @@ namespace astra_infinita {
             // Add your drawing code here
             spriteBatch.Begin();
 
-            //player.Draw(spriteBatch, camera.position);
-            for (int x = 0; x < tiles.Count; x++) {
-                for (int y = 0; y < tiles[x].Count; y++) {
-                    tiles[x][y].Draw(spriteBatch, camera.position);
-                }
-            }
-            grid.Draw(spriteBatch, camera.position);
-
-            if(player.getTile() != null)
-                spriteBatch.DrawString(myFont, Convert.ToString(player.myTile.position.Y), player.position - camera.position, Color.Blue);
+            curScene.Draw(spriteBatch);
 
             spriteBatch.End();
 

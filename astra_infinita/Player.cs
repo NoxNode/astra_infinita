@@ -7,15 +7,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using astra_infinita;
 using astra_infinita.Objects;
+
 namespace astra_infinita {
     public class Player : GameObject {
         public Vector2 position;
         bool up, down, left, right;
         bool up2, down2, left2, right2;
 
-        public Player(Vector2 startPosition) {
+        SpriteFont myFont;
+
+        public Player(Vector2 startPosition, Scene curScene, GraphicsDevice graphicsDevice) {
             layer = 0;
             objectIndex = 0;
 
@@ -29,20 +31,31 @@ namespace astra_infinita {
             right2 = false;
 
             position = new Vector2(startPosition.X, startPosition.Y);
-            myTile = Tile.getTileAt(startPosition / Game1.tile_length, Game1.tiles);
+            myTile = Tile.getTileAt(startPosition / curScene.tile_length, curScene.tiles);
+            this.curScene = curScene;
             objectName = "Player";
+            Load(graphicsDevice);
+
+            myFont = Game1.content.Load<SpriteFont>("SpriteFontTemPlate");
+        }
+
+        ~Player() {
+            Unload();
         }
 
         public override void Update(GameTime gameTime) {
             UpdateMovement(gameTime.ElapsedGameTime.Milliseconds);
+            UpdateCameraPosition();
         }
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
             spriteBatch.Draw(texture, position - cameraPosition);
+
+            spriteBatch.DrawString(myFont, Convert.ToString(myTile.position.Y), position - cameraPosition, Color.Blue);
         }
 
         public void Load(GraphicsDevice graphicsDevice) {
-            texture = new Texture2D(graphicsDevice, Game1.tile_length, Game1.tile_length);
+            texture = new Texture2D(graphicsDevice, curScene.tile_length, curScene.tile_length);
             Util.ColorTexture(texture, Color.Red);
         }
 
@@ -122,8 +135,10 @@ namespace astra_infinita {
 
             UpdateTilePosition(moved, move_dir);
 
-            position.X += (myTile.position.X * Game1.tile_length - position.X) / 100 * millisecondsElapsed;
-            position.Y += (myTile.position.Y * Game1.tile_length - position.Y) / 100 * millisecondsElapsed;
+            // TODO: constraints for the player and camera going out of world bounds
+
+            position.X += (myTile.position.X * curScene.tile_length - position.X) / 100 * millisecondsElapsed;
+            position.Y += (myTile.position.Y * curScene.tile_length - position.Y) / 100 * millisecondsElapsed;
         }
 
         public void UpdateTilePosition(bool moved, Vector2 move_dir) {
@@ -131,9 +146,24 @@ namespace astra_infinita {
                 myOldTile = myTile;
                 myOldTile.RemoveObject(this);
 
-                myTile = Tile.getTileAt(myTile.position + move_dir, Game1.tiles);
+                myTile = Tile.getTileAt(myTile.position + move_dir, curScene.tiles);
                 myTile.AddObject(this);
                 moved = false;
+            }
+        }
+
+        public void UpdateCameraPosition() {
+            if (position.X - curScene.camera.position.X < Game1.window_width / 3) {
+                curScene.camera.position.X = position.X - Game1.window_width / 3;
+            }
+            if (position.X - curScene.camera.position.X > Game1.window_width * 2 / 3) {
+                curScene.camera.position.X = position.X - Game1.window_width * 2 / 3;
+            }
+            if (position.Y - curScene.camera.position.Y < Game1.window_height / 3) {
+                curScene.camera.position.Y = position.Y - Game1.window_height / 3;
+            }
+            if (position.Y - curScene.camera.position.Y > Game1.window_height * 2 / 3) {
+                curScene.camera.position.Y = position.Y - Game1.window_height * 2 / 3;
             }
         }
 

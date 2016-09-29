@@ -7,10 +7,8 @@ using astra_infinita.Objects;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace astra_infinita
-{
-    public class Tile
-    {
+namespace astra_infinita {
+    public class Tile {
         public Vector2 position;
         public List<List<GameObject>> gameObjects;
 
@@ -41,6 +39,7 @@ namespace astra_infinita
         public void RemoveObject(GameObject obj) {
             gameObjects[obj.layer].RemoveAt(obj.objectIndex);
         }
+
         public void AddObject(GameObject obj) {
             gameObjects[obj.layer].Add(obj);
             obj.objectIndex = gameObjects[obj.layer].Count - 1;
