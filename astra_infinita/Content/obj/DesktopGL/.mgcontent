@@ -5,5 +5,6 @@
   <Config />
   <SourceFiles>
     <File>D:/workspace/github/astra_infinita/astra_infinita/Content/SpriteFontTemPlate.spritefont</File>
+    <File>D:/workspace/github/astra_infinita/astra_infinita/Content/Music/Songs/Wasteland/wasteland1.wav</File>
   </SourceFiles>
 </SourceFileCollection>

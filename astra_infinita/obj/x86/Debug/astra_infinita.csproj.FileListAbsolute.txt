@@ -28,3 +28,7 @@ C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infini
 C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\NVorbis.dll
 C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\OpenTK.dll
 C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infinita\obj\x86\Debug\astra_infinita.csprojResolveAssemblyReference.cache
+C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\Music\Songs\Wasteland\wasteland1.xnb
+C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\Music\Songs\Wasteland\wasteland1.ogg
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\Music\Songs\Wasteland\wasteland1.ogg
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\Music\Songs\Wasteland\wasteland1.xnb

@@ -19,3 +19,9 @@
 /processorParam:TextureFormat=Compressed
 /build:SpriteFontTemPlate.spritefont
 
+#begin Music/Songs/Wasteland/wasteland1.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Songs/Wasteland/wasteland1.wav
+

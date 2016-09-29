@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using System.IO;
 
 namespace astra_infinita {
     class MusicPlayer
@@ -93,6 +94,11 @@ namespace astra_infinita {
                 play_random_song();
                
             }
+        }
+
+        public virtual void Load()
+        {
+            AddSong(Path.Combine("Music", "Songs", "Wasteland", "Wasteland1"));
         }
     }
 }
