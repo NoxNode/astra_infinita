@@ -6,5 +6,7 @@ using System.Threading.Tasks;
 
 namespace astra_infinita {
     class Scene {
+
+
     }
 }
