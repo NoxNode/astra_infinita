@@ -17,17 +17,17 @@ namespace astra_infinita {
         }
 
         public void UpdatePosition(Vector2 playerPosition) {
-            if (playerPosition.X - position.X < Program.game.window_width / 3) {
-                position.X = playerPosition.X - Program.game.window_width / 3;
+            if (playerPosition.X - position.X < Game1.window_width / 3) {
+                position.X = playerPosition.X - Game1.window_width / 3;
             }
-            if (playerPosition.X - position.X > Program.game.window_width * 2 / 3) {
-                position.X = playerPosition.X - Program.game.window_width * 2 / 3;
+            if (playerPosition.X - position.X > Game1.window_width * 2 / 3) {
+                position.X = playerPosition.X - Game1.window_width * 2 / 3;
             }
-            if (playerPosition.Y - position.Y < Program.game.window_height / 3) {
-                position.Y = playerPosition.Y - Program.game.window_height / 3;
+            if (playerPosition.Y - position.Y < Game1.window_height / 3) {
+                position.Y = playerPosition.Y - Game1.window_height / 3;
             }
-            if (playerPosition.Y - position.Y > Program.game.window_height * 2 / 3) {
-                position.Y = playerPosition.Y - Program.game.window_height * 2 / 3;
+            if (playerPosition.Y - position.Y > Game1.window_height * 2 / 3) {
+                position.Y = playerPosition.Y - Game1.window_height * 2 / 3;
             }
         }
     }

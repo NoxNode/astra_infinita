@@ -14,11 +14,11 @@ namespace astra_infinita {
         SpriteBatch spriteBatch;
         public static ContentManager content;
 
-        public int window_width, window_height;
-        public int world_width, world_height;
+        public const int window_width = 800, window_height = 600;
+        public const int world_width = 800 * 16, world_height = 600 * 16;
 
-        public int tile_width;
-        public int tile_height;
+        public const int tile_width = 32;
+        public const int tile_height = 32;
         public List<Tile> mapTiles;
 
         Player player;
@@ -43,17 +43,10 @@ namespace astra_infinita {
             this.IsMouseVisible = true;
             content = new ContentManager(base.Content.ServiceProvider, "Content");
 
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
-            window_width = graphics.PreferredBackBufferWidth;
-            window_height = graphics.PreferredBackBufferHeight;
-
-            world_width = window_width * 16;
-            world_height = window_height * 16;
+            graphics.PreferredBackBufferWidth = window_width;
+            graphics.PreferredBackBufferHeight = window_height;
 
             //must be initialized before player.
-            tile_height = 32;
-            tile_width = 32;
             mapTiles = new List<Tile>();
 
             player = new Player(new Vector2(world_width / 2, world_height / 2));

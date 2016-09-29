@@ -14,8 +14,8 @@ namespace astra_infinita {
         public Texture2D verticalGridLine;
         
         public void Load(GraphicsDevice graphicsDevice) {
-            horizontalGridLine = new Texture2D(graphicsDevice, Program.game.window_width, 1);
-            verticalGridLine = new Texture2D(graphicsDevice, 1, Program.game.window_height);
+            horizontalGridLine = new Texture2D(graphicsDevice, Game1.window_width, 1);
+            verticalGridLine = new Texture2D(graphicsDevice, 1, Game1.window_height);
             Util.ColorTexture(horizontalGridLine, Color.White);
             Util.ColorTexture(verticalGridLine, Color.White);
         }
@@ -26,17 +26,17 @@ namespace astra_infinita {
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
-            for (int x = 0; x < Program.game.world_width; x += Program.game.tile_width) {
+            for (int x = 0; x < Game1.world_width; x += Game1.tile_width) {
                 spriteBatch.Draw(verticalGridLine, new Vector2(x - cameraPosition.X, 0));
             }
-            for (int y = 0; y < Program.game.world_height; y += Program.game.tile_height) {
+            for (int y = 0; y < Game1.world_height; y += Game1.tile_height) {
                 spriteBatch.Draw(horizontalGridLine, new Vector2(0, y - cameraPosition.Y));
             }
         }
 
         public void CreateTilesFromGrid() {
-            for (int x = 0; x < Program.game.world_width; x += Program.game.tile_width) {
-                for (int y = 0; y < Program.game.world_height; y += Program.game.tile_height) {
+            for (int x = 0; x < Game1.world_width; x += Game1.tile_width) {
+                for (int y = 0; y < Game1.world_height; y += Game1.tile_height) {
                     Program.game.mapTiles.Add(new Tile(x, y));
                 }
             }

@@ -31,11 +31,11 @@ namespace astra_infinita {
 
             position = new Vector2(startPosition.X, startPosition.Y);
             destination = new Vector2(startPosition.X, startPosition.Y);
-            tilePosition = new Tile((int)startPosition.X / Program.game.tile_width, (int)startPosition.Y / Program.game.tile_height);
+            tilePosition = new Tile((int)startPosition.X / Game1.tile_width, (int)startPosition.Y / Game1.tile_height);
         }
 
         public void Load(GraphicsDevice graphicsDevice) {
-            texture = new Texture2D(graphicsDevice, Program.game.tile_height, Program.game.tile_width);
+            texture = new Texture2D(graphicsDevice, Game1.tile_height, Game1.tile_width);
             Util.ColorTexture(texture, Color.Red);
         }
 
@@ -108,12 +108,11 @@ namespace astra_infinita {
 
             position.X += (destination.X - position.X) / 100 * millisecondsElapsed;
             position.Y += (destination.Y - position.Y) / 100 * millisecondsElapsed;
-            //updateTilePosition();
         }
 
         public void UpdateTilePosition() {
-            tilePosition.X = (int)destination.X / Program.game.tile_width;
-            tilePosition.Y = (int)destination.Y / Program.game.tile_height;
+            tilePosition.X = (int)destination.X / Game1.tile_width;
+            tilePosition.Y = (int)destination.Y / Game1.tile_height;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
@@ -128,8 +127,7 @@ namespace astra_infinita {
             return texture.Height;
         }
 
-        public Tile getTile()
-        {
+        public Tile getTile() {
             return tilePosition;
         }
 
