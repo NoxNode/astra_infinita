@@ -52,6 +52,27 @@ namespace astra_infinita
                 }
             }
 
+            public static T ReadFromJsonFile<T>(string filePath) where T : new()
+            {
+                TextReader reader = null;
+                try
+                {
+                    JsonSerializerSettings serializer = new JsonSerializerSettings();
+                    serializer.Formatting = Formatting.Indented;
+                    serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    serializer.NullValueHandling = NullValueHandling.Include;
+                    serializer.TypeNameHandling = TypeNameHandling.Auto;
+                    reader = new StreamReader(filePath);
+                    var fileContents = reader.ReadToEnd();
+                    return JsonConvert.DeserializeObject<T>(fileContents,serializer);
+                }
+                finally
+                {
+                    if (reader != null)
+                        reader.Close();
+                }
+            }
+
 
         }
     }
