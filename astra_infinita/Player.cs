@@ -8,16 +8,15 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using astra_infinita;
-
+using astra_infinita.Objects;
 namespace astra_infinita {
-    class Player {
-        public Vector2 position;
-        Texture2D texture;
+    public class Player : GameObject{
+
         Vector2 destination;
         bool up, down, left, right;
         bool up2, down2, left2, right2;
+        bool moved;
 
-        Tile tilePosition;
 
         public Player(Vector2 startPosition) {
             up = false;
@@ -31,7 +30,9 @@ namespace astra_infinita {
 
             position = new Vector2(startPosition.X, startPosition.Y);
             destination = new Vector2(startPosition.X, startPosition.Y);
-            tilePosition = new Tile((int)startPosition.X / Game1.tile_width, (int)startPosition.Y / Game1.tile_height);
+
+            tilePosition = Tile.getTile((int)startPosition.X / Game1.tile_width, (int)startPosition.Y / Game1.tile_height, Game1.mapTiles);
+            objectName = "Player";
         }
 
         public void Load(GraphicsDevice graphicsDevice) {
@@ -48,18 +49,22 @@ namespace astra_infinita {
             if (!up && Keyboard.GetState().IsKeyDown(Keys.W)) {
                 up = true;
                 move_dir.Y -= texture.Height;
+                moved = true;
             }
             if (!left && Keyboard.GetState().IsKeyDown(Keys.A)) {
                 left = true;
                 move_dir.X -= texture.Width;
+                moved = true;
             }
             if (!down && Keyboard.GetState().IsKeyDown(Keys.S)) {
                 down = true;
                 move_dir.Y += texture.Height;
+                moved = true;
             }
             if (!right && Keyboard.GetState().IsKeyDown(Keys.D)) {
                 right = true;
                 move_dir.X += texture.Width;
+                moved = true;
             }
             if (Keyboard.GetState().IsKeyUp(Keys.W)) {
                 up = false;
@@ -77,18 +82,22 @@ namespace astra_infinita {
             if (!up2 && !up && Keyboard.GetState().IsKeyDown(Keys.Up)) {
                 up2 = true;
                 move_dir.Y -= texture.Height;
+                moved = true;
             }
             if (!left2 && !left && Keyboard.GetState().IsKeyDown(Keys.Left)) {
                 left2 = true;
                 move_dir.X -= texture.Width;
+                moved = true;
             }
             if (!down2 && !down && Keyboard.GetState().IsKeyDown(Keys.Down)) {
                 down2 = true;
                 move_dir.Y += texture.Height;
+                moved = true;
             }
             if (!right2 && !right && Keyboard.GetState().IsKeyDown(Keys.Right)) {
                 right2 = true;
                 move_dir.X += texture.Width;
+                moved = true;
             }
             if (Keyboard.GetState().IsKeyUp(Keys.Up)) {
                 up2 = false;
@@ -108,11 +117,21 @@ namespace astra_infinita {
 
             position.X += (destination.X - position.X) / 100 * millisecondsElapsed;
             position.Y += (destination.Y - position.Y) / 100 * millisecondsElapsed;
+            
         }
 
         public void UpdateTilePosition() {
-            tilePosition.X = (int)destination.X / Game1.tile_width;
-            tilePosition.Y = (int)destination.Y / Game1.tile_height;
+            if (moved == true)
+            {
+                tilePostionOld = tilePosition;
+                Tile.removeObject(tilePostionOld, Program.game.player);
+                tilePosition.X = (int)destination.X / Game1.tile_width;
+                tilePosition.Y = (int)destination.Y / Game1.tile_height;
+                tilePosition = Tile.getTile(tilePosition.X, tilePosition.Y, Game1.mapTiles);
+
+                Tile.AddObject(tilePosition, this);
+                moved = false;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {

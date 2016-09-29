@@ -19,9 +19,9 @@ namespace astra_infinita {
 
         public const int tile_width = 32;
         public const int tile_height = 32;
-        public List<Tile> mapTiles;
+        public static List<Tile> mapTiles;
 
-        Player player;
+        public Player player;
         Camera camera;
         Grid grid;
 
@@ -48,10 +48,11 @@ namespace astra_infinita {
 
             //must be initialized before player.
             mapTiles = new List<Tile>();
-
+      
+            grid = new Grid();
+            Grid.CreateTilesFromGrid(mapTiles);
             player = new Player(new Vector2(world_width / 2, world_height / 2));
             camera = new Camera();
-            grid = new Grid();
 
             base.Initialize();
         }
@@ -69,7 +70,8 @@ namespace astra_infinita {
             grid.Load(GraphicsDevice);
 
             myFont = content.Load<SpriteFont>("SpriteFontTemPlate");
-            grid.CreateTilesFromGrid();
+            Tile.AddObject(player.getTile(), player);
+            //grid.CreateTilesFromGrid();
         }
 
         /// <summary>
@@ -111,10 +113,17 @@ namespace astra_infinita {
             // Add your drawing code here
             spriteBatch.Begin();
 
+            foreach(Tile t in mapTiles)
+            {
+                t.Draw(spriteBatch, camera.position);
+            }
             player.Draw(spriteBatch, camera.position);
             grid.Draw(spriteBatch, camera.position);
 
-            spriteBatch.DrawString(myFont, Convert.ToString(player.getTile().Y), player.position - camera.position, Color.Blue);
+            if(player.getTile()!=null)spriteBatch.DrawString(myFont, Convert.ToString(player.getTile().Y), player.position - camera.position, Color.Blue);
+
+
+            
 
             spriteBatch.End();
 

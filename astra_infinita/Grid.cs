@@ -34,10 +34,10 @@ namespace astra_infinita {
             }
         }
 
-        public void CreateTilesFromGrid() {
+        public static void CreateTilesFromGrid(List<Tile> tileList) {
             for (int x = 0; x < Game1.world_width; x += Game1.tile_width) {
                 for (int y = 0; y < Game1.world_height; y += Game1.tile_height) {
-                    Program.game.mapTiles.Add(new Tile(x, y));
+                    tileList.Add(new Tile(x/Game1.tile_width, y/Game1.tile_height));
                 }
             }
         }
