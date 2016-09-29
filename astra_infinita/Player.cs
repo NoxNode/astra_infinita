@@ -15,6 +15,8 @@ namespace astra_infinita {
         bool up, down, left, right;
         bool up2, down2, left2, right2;
 
+        public List<Item> inventory;
+
         public Player(Vector2 startPosition) {
             layer = 0;
             objectIndex = 0;
@@ -31,6 +33,9 @@ namespace astra_infinita {
             position = new Vector2(startPosition.X, startPosition.Y);
             myTile = Tile.getTileAt(startPosition / Game1.tile_length, Game1.tiles);
             objectName = "Player";
+
+            inventory = new List<Item>();
+            inventory.Capacity = 8;
         }
 
         public override void Update(GameTime gameTime) {
@@ -148,5 +153,43 @@ namespace astra_infinita {
         public Tile getTile() {
             return myTile;
         }
+
+        public bool isInventoryFull()
+        {
+            if (inventory.Count == inventory.Capacity) return true;
+            else return false;
+        }
+
+        public bool addItemToInventory(Item I)
+        {
+            if (isInventoryFull() == false)
+            {
+                inventory.Add(I);
+                return true;
+            }
+            return false;
+        }
+        public bool addItemToInventoryFromTile(Item I, Tile T)
+        {
+            if (isInventoryFull() == false)
+            {
+                inventory.Add(I);
+                T.RemoveObject(I);
+                return true;
+            }
+            return false;
+        }
+
+        public void removeItemFromInventory(Item I)
+        {
+            inventory.Remove(I);
+        }
+
+        public void dropItem(Item I, Tile T)
+        {
+            inventory.Remove(I);
+            T.AddObject(I);
+        }
+
     }
 }
