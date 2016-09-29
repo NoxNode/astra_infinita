@@ -17,6 +17,11 @@ namespace astra_infinita {
 
         public List<Item> inventory;
 
+        public Player()
+        {
+            //used for .Json serialization. Do not remove.
+        }
+
         public Player(Vector2 startPosition) {
             layer = 0;
             objectIndex = 0;

@@ -105,6 +105,11 @@ namespace astra_infinita {
                     tiles[x][y].Update(gameTime);
                 }
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.J))
+            {
+                SaveSystem.SaveGame.Save();
+            }
             camera.UpdatePosition(player.position);
 
             // TODO: constraints for the player and camera going out of world bounds
