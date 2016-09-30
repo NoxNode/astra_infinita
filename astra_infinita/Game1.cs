@@ -20,12 +20,11 @@ namespace astra_infinita {
         public static ContentManager content;
 
         public const int window_width = 800, window_height = 600;
+        public const int terrain_index = 0, item_index = 1, dynamic_object_index = 2, player_index = 3, num_object_layers = 4;
 
         public Scene curScene;
 
         public Dictionary<string,TerrainFeature> terrainList;
-
-        public Player player;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -83,11 +82,6 @@ namespace astra_infinita {
         protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            if (Keyboard.GetState().IsKeyDown(Keys.O))
-            {
-                Tile.getTileAt(new Vector2(Player.getPlayer().myTile.position.X - 1, Player.getPlayer().myTile.position.Y), curScene.tiles).AddTerrainFeature(new Water());
-            }
 
             // Add your update logic here
             curScene.Update(gameTime);

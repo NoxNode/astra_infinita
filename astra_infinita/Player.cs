@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using astra_infinita.Objects;
+using astra_infinita.Objects.TerrainFeatures;
 
 namespace astra_infinita {
     public class Player : GameObject {
@@ -21,7 +22,7 @@ namespace astra_infinita {
         int waterMax;
         int waterCurrent;
 
-        const int waterDecay=1;
+        const int waterDecay = 1;
         const double foodDecay = .4;
 
         SpriteFont myFont;
@@ -71,6 +72,11 @@ namespace astra_infinita {
             if (Keyboard.GetState().IsKeyDown(Keys.J)) {
                 SaveSystem.SaveGame.Save(this);
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.O)) {
+                Water water = new Water();
+                Tile.getTileAt(new Vector2(myTile.position.X - 1, myTile.position.Y), curScene.tiles).AddTerrain(water);
+                curScene.gameObjects[Game1.terrain_index].Add(water);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
@@ -86,18 +92,6 @@ namespace astra_infinita {
 
         public void Unload() {
             texture.Dispose();
-        }
-
-        public static Player getPlayer()
-        {
-            try {
-                if (Program.game.player != null) return Program.game.player;
-            }
-            catch(Exception e)
-            {
-                throw new Exception(Convert.ToString(e));
-            }
-            return null;
         }
 
         public void UpdateMovement(int millisecondsElapsed) {
@@ -181,11 +175,12 @@ namespace astra_infinita {
         public void UpdateTilePosition(bool moved, Vector2 move_dir) {
             if (moved == true) {
                 myOldTile = myTile;
-                myOldTile.RemoveObject(this);
+                myOldTile.RemovePlayer();
+
+                UpdateFoodAndWater();
 
                 myTile = Tile.getTileAt(myTile.position + move_dir, curScene.tiles);
-                myTile.AddObject(this);
-                updateFoodAndWater();
+                myTile.AddPlayer(this);
                 moved = false;
             }
         }
@@ -213,53 +208,43 @@ namespace astra_infinita {
             return texture.Height;
         }
 
-        public Tile getTile() {
-            return myTile;
+        public bool isInventoryFull() {
+            if (inventory.Count == inventory.Capacity)
+                return true;
+            else
+                return false;
         }
 
-        public bool isInventoryFull()
-        {
-            if (inventory.Count == inventory.Capacity) return true;
-            else return false;
-        }
-
-        public bool addItemToInventory(Item I)
-        {
-            if (isInventoryFull() == false)
-            {
+        public bool AddItemToInventory(Item I) {
+            if (isInventoryFull() == false) {
                 inventory.Add(I);
                 return true;
             }
             return false;
         }
-        public bool addItemToInventoryFromTile(Item I, Tile T)
-        {
-            if (isInventoryFull() == false)
-            {
+        public bool AddItemToInventoryFromTile(Item I, Tile T) {
+            if (isInventoryFull() == false) {
                 inventory.Add(I);
-                T.RemoveObject(I);
+                T.RemoveItem();
                 return true;
             }
             return false;
         }
 
-        public void removeItemFromInventory(Item I)
-        {
+        public void RemoveItemFromInventory(Item I) {
             inventory.Remove(I);
         }
 
-        public void dropItem(Item I, Tile T)
-        {
+        public void DropItem(Item I, Tile T) {
             inventory.Remove(I);
-            T.AddObject(I);
+            T.AddItem(I);
         }
 
-        public void updateFoodAndWater()
-        {
-            if(stomachCurrent>0)stomachCurrent -= foodDecay;
-            if(waterCurrent>0)waterCurrent -= waterDecay;
-
+        public void UpdateFoodAndWater() {
+            if(stomachCurrent > 0)
+                stomachCurrent -= foodDecay;
+            if(waterCurrent > 0)
+                waterCurrent -= waterDecay;
         }
-
     }
 }
