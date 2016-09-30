@@ -42,7 +42,7 @@ namespace astra_infinita {
         /// Looks for a song specified in the Song List. The s passed is the song's name.
         /// </summary>
         /// <param name="s">The song's name</param>
-        public virtual void play_song_from_list(String s)
+        public virtual void playSongFromList(String s)
         {
             foreach(KeyValuePair<Song,string> pair in song_list)
             {
@@ -62,37 +62,35 @@ namespace astra_infinita {
             song_list.Add(new_song, s);
         }
 
-        public virtual void play_random_song()
+        public virtual void playRandomSong()
         {
             Random r = new Random();
             int random = r.Next(0, song_list.Count);
             current_song = song_list.Keys.ElementAt(random);
             current_song_path = song_list.Values.ElementAt(random);
-            Console.WriteLine(current_song);
             Console.WriteLine(current_song_path);
             MediaPlayer.Play(current_song);
         }
 
-        public virtual void stop_song()
+        public virtual void stopSong()
         {
             MediaPlayer.Stop();
         }
-        public virtual void pause_song()
+        public virtual void pauseSong()
         {
             MediaPlayer.Pause();
         }
-        public virtual void resume_song()
+        public virtual void resumeSong()
         {
             MediaPlayer.Resume();
         }
         public virtual void Update(GameTime gameTime)
         {
-
             //Console.WriteLine(MediaPlayer.State);
             if (MediaPlayer.State == MediaState.Stopped)
             {
-                play_random_song();
-               
+                playRandomSong();
+                
             }
         }
 

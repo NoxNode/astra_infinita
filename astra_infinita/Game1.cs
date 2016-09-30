@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using astra_infinita.Scenes;
+using astra_infinita.Objects.TerrainFeatures;
 
 namespace astra_infinita {
     /// <summary>
@@ -21,6 +22,10 @@ namespace astra_infinita {
         public const int window_width = 800, window_height = 600;
 
         public Scene curScene;
+
+        public Dictionary<string,TerrainFeature> terrainList;
+
+        public Player player;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -44,6 +49,9 @@ namespace astra_infinita {
 
             curScene = new StartingPlanet(32, 800 * 16, 600 * 16);
 
+            terrainList = new Dictionary<string, TerrainFeature>();
+
+
             base.Initialize();
         }
 
@@ -58,7 +66,8 @@ namespace astra_infinita {
             // use this.Content to load your game content here
             curScene.InitializeTilemap(GraphicsDevice);
             musicPlayer.Load();
-            musicPlayer.play_song_from_list("wasteland1");
+            musicPlayer.playSongFromList("wasteland1");
+            TerrainFeature.loadAllTerrainFeatures();
         }
 
         /// <summary>
@@ -79,9 +88,20 @@ namespace astra_infinita {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.O))
+            {
+                TerrainFeature T;
+                terrainList.TryGetValue("Shallow Water", out T);
+                Tile.getTileAt(new Vector2(Player.getPlayer().myTile.position.X - 1, Player.getPlayer().myTile.position.Y), curScene.tiles).AddTerrainFeature(T);
+                Tile.getTileAt(new Vector2(Player.getPlayer().myTile.position.X - 1, Player.getPlayer().myTile.position.Y), curScene.tiles).terrain.myTile = Tile.getTileAt(new Vector2(Player.getPlayer().myTile.position.X - 1, Player.getPlayer().myTile.position.Y), curScene.tiles);
+                Console.WriteLine(Tile.getTileAt(new Vector2(Player.getPlayer().myTile.position.X - 1, Player.getPlayer().myTile.position.Y), curScene.tiles).terrain.objectName);
+                Console.WriteLine(Tile.getTileAt(new Vector2(Player.getPlayer().myTile.position.X - 1, Player.getPlayer().myTile.position.Y), curScene.tiles).position.X);
+                Console.WriteLine(Tile.getTileAt(new Vector2(Player.getPlayer().myTile.position.X - 1, Player.getPlayer().myTile.position.Y), curScene.tiles).position.Y);
+            }
+
             // Add your update logic here
             curScene.Update(gameTime);
-
+            musicPlayer.Update(gameTime);
             base.Update(gameTime);
         }
 

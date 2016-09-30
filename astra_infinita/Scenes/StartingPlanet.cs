@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using astra_infinita;
-
 namespace astra_infinita.Scenes {
     public class StartingPlanet : Scene {
         public StartingPlanet(int tile_length, int world_width, int world_height) {
@@ -21,8 +20,8 @@ namespace astra_infinita.Scenes {
         public override void InitializeTilemap(GraphicsDevice graphicsDevice) {
             grid.Load(graphicsDevice);
 
-            Player player = new Player(new Vector2(world_width / 2, world_height / 2), this, graphicsDevice);
-            tiles[(int)(player.position.X / tile_length)][(int)(player.position.Y / tile_length)].AddObject(player);
+           Program.game.player = new Player(new Vector2(world_width / 2, world_height / 2), this, graphicsDevice);
+            tiles[(int)(Player.getPlayer().position.X / tile_length)][(int)(Player.getPlayer().position.Y / tile_length)].AddObject(Player.getPlayer());
         }
 
         public override void UninitializeTilemap() {

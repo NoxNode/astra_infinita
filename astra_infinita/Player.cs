@@ -16,6 +16,14 @@ namespace astra_infinita {
         bool up2, down2, left2, right2;
         public List<Item> inventory;
 
+        double stomachMax;
+        double stomachCurrent;
+        int waterMax;
+        int waterCurrent;
+
+        const int waterDecay=1;
+        const double foodDecay = .4;
+
         SpriteFont myFont;
 
         public Player()
@@ -43,6 +51,11 @@ namespace astra_infinita {
             inventory = new List<Item>();
             inventory.Capacity = 8;
 
+            stomachMax = 20;
+            stomachCurrent = stomachMax;
+            waterMax = 30;
+            waterCurrent = waterMax;
+
             Load(graphicsDevice);
 
             myFont = Game1.content.Load<SpriteFont>("SpriteFontTemPlate");
@@ -63,7 +76,7 @@ namespace astra_infinita {
         public override void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
             spriteBatch.Draw(texture, position - cameraPosition);
 
-            spriteBatch.DrawString(myFont, Convert.ToString(myTile.position.Y), position - cameraPosition, Color.Blue);
+            spriteBatch.DrawString(myFont, Convert.ToString(waterCurrent), position - cameraPosition, Color.Blue);
         }
 
         public void Load(GraphicsDevice graphicsDevice) {
@@ -73,6 +86,18 @@ namespace astra_infinita {
 
         public void Unload() {
             texture.Dispose();
+        }
+
+        public static Player getPlayer()
+        {
+            try {
+                if (Program.game.player != null) return Program.game.player;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(Convert.ToString(e));
+            }
+            return null;
         }
 
         public void UpdateMovement(int millisecondsElapsed) {
@@ -160,6 +185,7 @@ namespace astra_infinita {
 
                 myTile = Tile.getTileAt(myTile.position + move_dir, curScene.tiles);
                 myTile.AddObject(this);
+                updateFoodAndWater();
                 moved = false;
             }
         }
@@ -226,6 +252,13 @@ namespace astra_infinita {
         {
             inventory.Remove(I);
             T.AddObject(I);
+        }
+
+        public void updateFoodAndWater()
+        {
+            if(stomachCurrent>0)stomachCurrent -= foodDecay;
+            if(waterCurrent>0)waterCurrent -= waterDecay;
+
         }
 
     }
