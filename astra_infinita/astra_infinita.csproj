@@ -44,6 +44,8 @@
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="Objects\Item.cs" />
+    <Compile Include="Objects\TerrainFeatures\TerrainFeature.cs" />
+    <Compile Include="Objects\TerrainFeatures\Water.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

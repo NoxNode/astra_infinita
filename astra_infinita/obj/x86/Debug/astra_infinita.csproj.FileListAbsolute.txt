@@ -33,3 +33,5 @@ C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infini
 D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\Music\Songs\Wasteland\wasteland1.ogg
 D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\Music\Songs\Wasteland\wasteland1.xnb
 C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Newtonsoft.Json.dll
+C:\Users\owner\Documents\Visual Studio 2015\Projects\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\TerrainFeatures\Graphics\WaterShallow.xnb
+D:\workspace\github\astra_infinita\astra_infinita\bin\DesktopGL\x86\Debug\Content\TerrainFeatures\Graphics\WaterShallow.xnb
