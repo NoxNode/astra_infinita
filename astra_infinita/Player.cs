@@ -164,25 +164,30 @@ namespace astra_infinita {
                 right2 = false;
             }
 
-            UpdateTilePosition(moved, move_dir);
-
             // TODO: constraints for the player and camera going out of world bounds
+
+            if (moved) {
+                UpdateTilePosition(move_dir);
+                UpdateFoodAndWater();
+            }
 
             position.X += (myTile.position.X * curScene.tile_length - position.X) / 100 * millisecondsElapsed;
             position.Y += (myTile.position.Y * curScene.tile_length - position.Y) / 100 * millisecondsElapsed;
         }
 
-        public void UpdateTilePosition(bool moved, Vector2 move_dir) {
-            if (moved == true) {
-                myOldTile = myTile;
-                myOldTile.RemovePlayer();
+        public void UpdateTilePosition(Vector2 move_dir) {
+            myOldTile = myTile;
+            myOldTile.RemovePlayer();
 
-                UpdateFoodAndWater();
+            myTile = Tile.getTileAt(myTile.position + move_dir, curScene.tiles);
+            myTile.AddPlayer(this);
+        }
 
-                myTile = Tile.getTileAt(myTile.position + move_dir, curScene.tiles);
-                myTile.AddPlayer(this);
-                moved = false;
-            }
+        public void UpdateFoodAndWater() {
+            if (stomachCurrent > 0)
+                stomachCurrent -= foodDecay;
+            if (waterCurrent > 0)
+                waterCurrent -= waterDecay;
         }
 
         public void UpdateCameraPosition() {
@@ -238,13 +243,6 @@ namespace astra_infinita {
         public void DropItem(Item I, Tile T) {
             inventory.Remove(I);
             T.AddItem(I);
-        }
-
-        public void UpdateFoodAndWater() {
-            if(stomachCurrent > 0)
-                stomachCurrent -= foodDecay;
-            if(waterCurrent > 0)
-                waterCurrent -= waterDecay;
         }
     }
 }
