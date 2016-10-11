@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using astra_infinita.Scenes;
 using astra_infinita.Objects.TerrainFeatures;
+using astra_infinita.GUIs;
 
 namespace astra_infinita {
     /// <summary>
@@ -20,11 +21,8 @@ namespace astra_infinita {
         public static ContentManager content;
 
         public const int window_width = 800, window_height = 600;
-        public const int terrain_index = 0, item_index = 1, dynamic_object_index = 2, player_index = 3, num_object_layers = 4;
 
         public Scene curScene;
-
-        public Dictionary<string,TerrainFeature> terrainList;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -46,6 +44,7 @@ namespace astra_infinita {
 
             musicPlayer = new MusicPlayer();
 
+            Fonts.InitializeFonts(); // must be before initalization of the scene
             curScene = new StartingPlanet(32, 800 * 16, 600 * 16);
 
             base.Initialize();
@@ -61,6 +60,8 @@ namespace astra_infinita {
 
             // use this.Content to load your game content here
             curScene.InitializeTilemap(GraphicsDevice);
+            curScene.InitializeGUI(GraphicsDevice);
+
             musicPlayer.Load();
             musicPlayer.playSongFromList("wasteland1");
         }

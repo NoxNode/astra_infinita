@@ -14,6 +14,7 @@ namespace astra_infinita.Objects {
         public Tile myOldTile;
         public Texture2D texture;
         public string objectName;
+        public const int terrain_index = 0, item_index = 1, dynamic_object_index = 2, player_index = 3, num_object_layers = 4;
 
         public virtual void Update(GameTime gameTime) { }
 

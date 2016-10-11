@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using astra_infinita.Objects;
 using astra_infinita.Objects.TerrainFeatures;
+using astra_infinita.GUIs;
 
 namespace astra_infinita {
     public class Player : GameObject {
@@ -20,15 +21,12 @@ namespace astra_infinita {
         double stomachMax;
         double stomachCurrent;
         int waterMax;
-        int waterCurrent;
+        public int waterCurrent;
 
         const int waterDecay = 1;
         const double foodDecay = .4;
 
-        SpriteFont myFont;
-
-        public Player()
-        {
+        public Player() {
             //used for .Json serialization. Do not remove.
         }
 
@@ -58,8 +56,6 @@ namespace astra_infinita {
             waterCurrent = waterMax;
 
             Load(graphicsDevice);
-
-            myFont = Game1.content.Load<SpriteFont>("SpriteFontTemPlate");
         }
 
         ~Player() {
@@ -75,14 +71,15 @@ namespace astra_infinita {
             if (Keyboard.GetState().IsKeyDown(Keys.O)) {
                 Water water = new Water();
                 Tile.getTileAt(new Vector2(myTile.position.X - 1, myTile.position.Y), curScene.tiles).AddTerrain(water);
-                curScene.gameObjects[Game1.terrain_index].Add(water);
+                curScene.gameObjects[GameObject.terrain_index].Add(water);
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition) {
             spriteBatch.Draw(texture, position - cameraPosition);
 
-            spriteBatch.DrawString(myFont, Convert.ToString(waterCurrent), position - cameraPosition, Color.Blue);
+            //spriteBatch.DrawString(myFont, Convert.ToString(waterCurrent), position - cameraPosition, Color.Blue);
+            spriteBatch.DrawString(Fonts.testFont, Convert.ToString(waterCurrent), position - cameraPosition, Color.Blue);
         }
 
         public void Load(GraphicsDevice graphicsDevice) {
